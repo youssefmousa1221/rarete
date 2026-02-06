@@ -29,8 +29,9 @@
       <a href="#" class="top-bar-icon" id="btn-share" aria-label="Share link" title="Share page link">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
       </a>
-      <a href="#" class="top-bar-icon" id="btn-cart" aria-label="Order via Instagram" title="Order via Instagram">
+      <a href="#" class="top-bar-icon" id="btn-cart" aria-label="Shopping Cart" title="Shopping Cart">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span id="cart-count" class="cart-badge">0</span>
       </a>
     </div>
   </header>
@@ -63,9 +64,20 @@
 
   <div id="app">
     <main id="view-home" class="view active">
-      <header class="site-header">
-        <p class="tagline">Every scent tells a story</p>
-      </header>
+      <section class="hero-section">
+        <div class="hero-content">
+          <h1 class="hero-title">THE ART OF SCENT</h1>
+          <p class="hero-subtitle">Every scent tells a story</p>
+          <a href="#" class="hero-cta" data-category="all">DISCOVER COLLECTION →</a>
+        </div>
+        <div class="hero-image"></div>
+      </section>
+      
+      <section class="featured-section">
+        <h2 class="section-title">CUSTOMER FAVORITES</h2>
+        <div id="featured-perfumes" class="featured-grid"></div>
+      </section>
+
       <section class="home-categories">
         <article class="category-card" data-category="all">
           <div class="card-bg"></div>
@@ -100,7 +112,40 @@
       </header>
       <section id="product-detail" class="product-detail"></section>
     </main>
+
+    <main id="view-cart" class="view">
+      <header class="site-header compact">
+        <button type="button" class="back-btn" data-nav="home" aria-label="Back">←</button>
+        <h1 class="page-title">Shopping Cart</h1>
+      </header>
+      <section id="cart-content" class="cart-content"></section>
+    </main>
+
+    <main id="view-checkout" class="view">
+      <header class="site-header compact">
+        <button type="button" class="back-btn" data-nav="cart" aria-label="Back">←</button>
+        <h1 class="page-title">Checkout</h1>
+      </header>
+      <section id="checkout-content" class="checkout-content"></section>
+    </main>
   </div>
+
+  <!-- Cart Sidebar -->
+  <div id="cart-sidebar-overlay" class="cart-sidebar-overlay" aria-hidden="true"></div>
+  <aside id="cart-sidebar" class="cart-sidebar">
+    <div class="cart-sidebar-header">
+      <h2>Shopping Cart</h2>
+      <button type="button" class="cart-sidebar-close" id="btn-close-cart" aria-label="Close">×</button>
+    </div>
+    <div id="cart-sidebar-content" class="cart-sidebar-content"></div>
+    <div class="cart-sidebar-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cart-total-price">0 EGP</span>
+      </div>
+      <button type="button" class="btn-checkout" id="btn-checkout">Checkout</button>
+    </div>
+  </aside>
 
   <footer class="site-footer">
     <div class="footer-center">
