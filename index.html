@@ -7,17 +7,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Kufi+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="top-bar">
     <a href="#" class="top-bar-logo" data-nav="home">Rareté</a>
-    <nav class="top-bar-nav">
+<nav class="top-bar-nav">
       <a href="#" class="top-bar-link" data-nav="home">Home</a>
       <a href="#" class="top-bar-link" data-category="all">All</a>
       <a href="#" class="top-bar-link" data-category="summer">Summer</a>
       <a href="#" class="top-bar-link" data-category="winter">Winter</a>
       <a href="#" class="top-bar-link" data-category="offers">Offers</a>
+      <a href="#" class="top-bar-link" data-category="forher">For Her</a>
     </nav>
     <div class="top-bar-actions">
       <a href="#" class="top-bar-icon" id="btn-open-sidebar" aria-label="Menu">
@@ -74,27 +76,43 @@
       </section>
       
       <section class="featured-section">
-        <h2 class="section-title">CUSTOMER FAVORITES</h2>
-        <div id="featured-perfumes" class="featured-grid"></div>
+        <h2 class="section-title">Best sellers</h2>
+        <div class="swiper featured-swiper">
+          <div class="swiper-wrapper" id="featured-perfumes"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-pagination"></div>
+        </div>
       </section>
 
-      <section class="home-categories">
-        <article class="category-card" data-category="all">
-          <div class="card-bg"></div>
-          <span class="card-label">All</span>
-        </article>
-        <article class="category-card" data-category="summer">
-          <div class="card-bg"></div>
-          <span class="card-label">Summer</span>
-        </article>
-        <article class="category-card" data-category="winter">
-          <div class="card-bg"></div>
-          <span class="card-label">Winter</span>
-        </article>
-        <article class="category-card" data-category="offers">
-          <div class="card-bg"></div>
-          <span class="card-label">Offers</span>
-        </article>
+      <section class="categories-section">
+        <div class="swiper categories-swiper">
+          <div class="swiper-wrapper">
+            <article class="category-card swiper-slide" data-category="all">
+              <div class="card-bg"></div>
+              <span class="card-label">All</span>
+            </article>
+            <article class="category-card swiper-slide" data-category="summer">
+              <div class="card-bg"></div>
+              <span class="card-label">Summer</span>
+            </article>
+            <article class="category-card swiper-slide" data-category="winter">
+              <div class="card-bg"></div>
+              <span class="card-label">Winter</span>
+            </article>
+            <article class="category-card swiper-slide" data-category="offers">
+              <div class="card-bg"></div>
+              <span class="card-label">Offers</span>
+            </article>
+            <article class="category-card swiper-slide" data-category="forher">
+              <div class="card-bg"></div>
+              <span class="card-label">For Her</span>
+            </article>
+          </div>
+          <div class="swiper-button-next categories-next"></div>
+          <div class="swiper-button-prev categories-prev"></div>
+          <div class="swiper-pagination categories-pagination"></div>
+        </div>
       </section>
     </main>
 
@@ -168,6 +186,7 @@
   </footer>
 
   <script src="data.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

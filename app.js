@@ -391,18 +391,22 @@
     });
   }
 
+  let featuredSwiper = null;
+
   function renderFeaturedPerfumes() {
     if (!featuredPerfumes) return;
-    const featured = PERFUMES.slice(0, 3);
+    const featured = PERFUMES.slice(0, 6);
     featuredPerfumes.innerHTML = featured.map(p => `
-      <article class="featured-card" data-id="${p.id}">
-        <div class="featured-card-img" style="background-image:url('${p.image}')"></div>
-        <div class="featured-card-info">
-          <h3>${p.nameEn}</h3>
-          <p class="featured-card-price">${p.originalPrice ? `<span class="original-price">${p.originalPrice}</span> ` : ''}${p.price} EGP</p>
-          <button class="btn-add-to-cart" data-id="${p.id}">Add to Cart</button>
-        </div>
-      </article>
+      <div class="swiper-slide">
+        <article class="featured-card" data-id="${p.id}">
+          <div class="featured-card-img" style="background-image:url('${p.image}')"></div>
+          <div class="featured-card-info">
+            <h3>${p.nameEn}</h3>
+            <p class="featured-card-price">${p.originalPrice ? `<span class="original-price">${p.originalPrice}</span> ` : ''}${p.price} EGP</p>
+            <button class="btn-add-to-cart" data-id="${p.id}">Add to Cart</button>
+          </div>
+        </article>
+      </div>
     `).join('');
     
     featuredPerfumes.querySelectorAll('.featured-card').forEach(card => {
@@ -420,6 +424,33 @@
         alert('Added to cart!');
       });
     });
+
+    // Initialize Swiper after rendering
+    if (!featuredSwiper) {
+      featuredSwiper = new Swiper('.featured-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+          480: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          }
+        }
+      });
+    }
   }
 
   function openProduct(id) {

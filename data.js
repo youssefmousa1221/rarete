@@ -8,7 +8,8 @@ const CATEGORIES = {
   all: { title: 'All', titleEn: 'All' },
   summer: { title: 'Summer', titleEn: 'Summer' },
   winter: { title: 'Winter', titleEn: 'Winter' },
-  offers: { title: 'Offers', titleEn: 'Offers' }
+  offers: { title: 'Offers', titleEn: 'Offers' },
+  forher: { title: 'For Her', titleEn: 'For Her' }
 };
 
 const PERFUMES = [
@@ -18,8 +19,8 @@ const PERFUMES = [
     story: 'The scent of Greek power and wisdom. Zeus, lord of Olympus, gives you an unforgettable presence.',
     category: 'winter',
     price: 450,
-    originalPrice: null,
-    image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=600&q=80',
+    originalPrice: 500,
+    image: 'photos/zeus-perfume-8yeabxz2j.png',
     notes: {
       top: ['Thunder Essence', 'Electric Ozone', 'Stormy Bergamot'],
       heart: ['Divine Ambrosia', 'Olympian Cedar', 'Lightning Musk'],
@@ -27,115 +28,45 @@ const PERFUMES = [
     }
   },
   {
-    id: 'alexander',
-    nameEn: 'Alexander the Great',
-    story: 'The conqueror who changed the world. Boldness and ambition in every spray.',
-    category: 'summer',
-    price: 420,
-    originalPrice: null,
-    image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=600&q=80',
-    notes: {
-      top: ['Conquest Citrus', 'Victory Lime', 'Empire Grapefruit'],
-      heart: ['Warrior Lavender', 'Conqueror\'s Rose', 'Battlefield Sage'],
-      base: ['Royal Sandalwood', 'Triumphant Vanilla', 'Legendary Tonka']
-    }
-  },
-  {
     id: 'osiris',
     nameEn: 'Osiris',
-    story: 'The legend of life and rebirth. A deep scent that tells the eternal story of Egypt.',
+    story: 'In ancient Egyptian mythology, Osiris was the god of the afterlife, a figure of wisdom, justice, and transformation — a force that ruled beyond death and guided souls toward new beginnings.',
     category: 'winter',
-    price: 480,
-    originalPrice: null,
-    image: 'https://images.unsplash.com/photo-1587017539504-67cfbddac569?w=600&q=80',
+    price: 450,
+    originalPrice: 500,
+    image: 'photos/download (6).png',
     notes: {
-      top: ['Nile Water Lily', 'Sacred Incense', 'Desert Wind'],
-      heart: ['Pharaoh\'s Myrrh', 'Eternal Frankincense', 'Rebirth Lotus'],
-      base: ['Ancient Papyrus', 'Tomb Amber', 'Immortal Oud']
+      top: ['Pink Pepper', 'Juniper', 'Violet'],
+      heart: ['Toffee', 'Cinnamon', 'Lavender', 'Sage'],
+      base: ['Vanilla', 'Amber', 'Tonka Bean', 'Suede']
     }
   },
   {
-    id: 'cleopatra',
-    nameEn: 'Cleopatra',
-    story: 'The queen\'s charm. Femininity and power in one fragrance.',
-    category: 'summer',
-    price: 440,
-    originalPrice: null,
-    image: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=600&q=80',
-    notes: {
-      top: ['Queen\'s Rose', 'Royal Jasmine', 'Empress Peony'],
-      heart: ['Seductive Ylang', 'Powerful Iris', 'Charming Tuberose'],
-      base: ['Golden Honey', 'Luxurious Musk', 'Regal Patchouli']
-    }
-  },
-  {
-    id: 'apollo',
-    nameEn: 'Apollo',
-    story: 'God of light and the arts. Freshness and clarity for the day.',
-    category: 'summer',
-    price: 400,
-    originalPrice: null,
-    image: 'https://images.unsplash.com/photo-1619994121345-228e4c2dce3b?w=600&q=80',
-    notes: {
-      top: ['Sunbeam Lemon', 'Radiant Orange', 'Golden Light'],
-      heart: ['Solar Floral', 'Bright Neroli', 'Luminous Lavender'],
-      base: ['Sunset Amber', 'Solar Wood', 'Eternal Light']
-    }
-  },
-  {
-    id: 'nefertiti',
-    nameEn: 'Nefertiti',
-    story: 'Beauty that never fades. A fragrance that evokes the spirit of the most beautiful queen.',
-    category: 'offers',
-    price: 350,
-    originalPrice: 450,
-    image: 'https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?w=600&q=80',
-    notes: {
-      top: ['Beauty\'s Bloom', 'Radiant Magnolia', 'Elegant Freesia'],
-      heart: ['Timeless Rose', 'Perfect Orchid', 'Divine Gardenia'],
-      base: ['Eternal Vanilla', 'Smooth Cashmere', 'Unfading Beauty']
-    }
-  },
-  {
-    id: 'hades',
-    nameEn: 'Hades',
-    story: 'The mystery of the underworld. A dark, bold scent for the night.',
+    id: 'trojan',
+    nameEn: 'Trojan',
+    story: 'In ancient Greek mythology, the Trojan Horse was the wooden structure used by the Greeks to enter the city of Troy after years of war — a masterstroke of intelligence that changed history forever.',
     category: 'winter',
-    price: 470,
-    originalPrice: null,
-    image: 'https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=600&q=80',
+    price: 530,
+    originalPrice: 600,
+    image: 'photos/trojan-forge-ottmsbkk6.png',
     notes: {
-      top: ['Dark Smoke', 'Mysterious Cypress', 'Shadowy Black Pepper'],
-      heart: ['Underworld Rose', 'Deep Vetiver', 'Eternal Night'],
-      base: ['Dark Oud', 'Mysterious Leather', 'Abyssal Amber']
+      top: ['Cinnamon', 'Orange Blossom', 'Cardamom', 'Bergamot'],
+      heart: ['Bourbon Vanilla', 'Elemi'],
+      base: ['Praline', 'Musk', 'Ambroxan', 'Guaiac Wood', 'Tonka', 'Candied Almond']
     }
   },
   {
-    id: 'aphrodite',
-    nameEn: 'Aphrodite',
-    story: 'Goddess of love and beauty. An irresistible romantic fragrance.',
-    category: 'summer',
-    price: 430,
-    originalPrice: null,
-    image: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=600&q=80',
+    id: 'haydara',
+    nameEn: 'Haydara',
+    story: "During the historic 'Battle of Khaybar', when the fortresses stood unbroken and fear filled the battlefield, Ali carried the banner with unmatched bravery. With unwavering resolve, he faced the formidable warrior 'Marhab', turning the tide of battle and sealing a moment that would echo through history as a testament to valor and faith.",
+    category: 'winter',
+    price: 450,
+    originalPrice: 500,
+    image: 'photos/1.png',
     notes: {
-      top: ['Love\'s First Blush', 'Passionate Pink Pepper', 'Romantic Bergamot'],
-      heart: ['Goddess Rose', 'Seductive Jasmine', 'Enchanting Ylang'],
-      base: ['Love Potion', 'Sensual Musk', 'Eternal Romance']
+      top: ['Saffron', 'Nutmeg', 'Lavender'],
+      heart: ['Agarwood (Oud)'],
+      base: ['Patchouli', 'Musk']
     }
   },
-  {
-    id: 'ramses',
-    nameEn: 'Ramses',
-    story: 'The greatness of the pharaohs. A fragrance fit for kings.',
-    category: 'offers',
-    price: 380,
-    originalPrice: 480,
-    image: 'https://images.unsplash.com/photo-1587017539504-67cfbddac569?w=600&q=80',
-    notes: {
-      top: ['Royal Spice', 'Pharaoh\'s Gold', 'Imperial Saffron'],
-      heart: ['Temple Incense', 'Sacred Cedar', 'Divine Cinnamon'],
-      base: ['Throne Oud', 'Royal Amber', 'Eternal Power']
-    }
-  }
 ];
