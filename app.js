@@ -392,10 +392,45 @@
   }
 
   let featuredSwiper = null;
+  let categoriesSwiper = null;
 
   function renderFeaturedPerfumes() {
     if (!featuredPerfumes) return;
-    const featured = PERFUMES.slice(0, 6);
+    // Edit this array to change which perfumes appear in Best Sellers - add or remove perfume IDs
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    const bestSellerIds = ['osiris', 'trojan', 'haydara'];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    const featured = bestSellerIds.map(id => PERFUMES.find(p => p.id === id)).filter(Boolean);
     featuredPerfumes.innerHTML = featured.map(p => `
       <div class="swiper-slide">
         <article class="featured-card" data-id="${p.id}">
@@ -625,6 +660,37 @@
         showView('category');
         renderCategory(undefined, list, q || '');
       }, 200);
+    });
+  }
+
+  // Initialize Swiper for categories
+  if (!categoriesSwiper) {
+    categoriesSwiper = new Swiper('.categories-swiper', {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      loop: false,
+      pagination: {
+        el: '.categories-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.categories-next',
+        prevEl: '.categories-prev',
+      },
+      breakpoints: {
+        480: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 30,
+        }
+      }
     });
   }
 

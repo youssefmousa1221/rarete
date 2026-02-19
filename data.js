@@ -16,24 +16,24 @@ const PERFUMES = [
   {
     id: 'zeus',
     nameEn: 'Zeus',
-    story: 'The scent of Greek power and wisdom. Zeus, lord of Olympus, gives you an unforgettable presence.',
+    story: 'Inspired by "Ombre Nomade".The scent of Greek power and wisdom. Zeus, lord of Olympus, gives you an unforgettable presence.',
     category: 'winter',
-    price: 450,
-    originalPrice: 500,
+    price: 330,
+    originalPrice: 395,
     image: 'photos/zeus-perfume-8yeabxz2j.png',
     notes: {
-      top: ['Thunder Essence', 'Electric Ozone', 'Stormy Bergamot'],
-      heart: ['Divine Ambrosia', 'Olympian Cedar', 'Lightning Musk'],
-      base: ['Thunderous Amber', 'Godly Leather', 'Eternal Resin']
+      top: ['Raspberry', 'Incense', 'Saffron','Gerranium'],
+      heart: ['Oud', 'Benzoin', 'Rose'],
+      base: ['Incense', 'Amberwood', 'Leather']
     }
   },
   {
     id: 'osiris',
     nameEn: 'Osiris',
-    story: 'In ancient Egyptian mythology, Osiris was the god of the afterlife, a figure of wisdom, justice, and transformation — a force that ruled beyond death and guided souls toward new beginnings.',
+    story: 'Inspired by "Stronger With You Intensely". In ancient Egyptian mythology, Osiris was the god of the afterlife, a figure of wisdom, justice, and transformation — a force that ruled beyond death and guided souls toward new beginnings.',
     category: 'winter',
-    price: 450,
-    originalPrice: 500,
+    price: 260,
+    originalPrice: 310,
     image: 'photos/download (6).png',
     notes: {
       top: ['Pink Pepper', 'Juniper', 'Violet'],
@@ -44,10 +44,10 @@ const PERFUMES = [
   {
     id: 'trojan',
     nameEn: 'Trojan',
-    story: 'In ancient Greek mythology, the Trojan Horse was the wooden structure used by the Greeks to enter the city of Troy after years of war — a masterstroke of intelligence that changed history forever.',
+    story: 'Inspired by "ALTHAÏR". In ancient Greek mythology, the Trojan Horse was the wooden structure used by the Greeks to enter the city of Troy after years of war — a masterstroke of intelligence that changed history forever.',
     category: 'winter',
-    price: 530,
-    originalPrice: 600,
+    price: 280,
+    originalPrice: 335,
     image: 'photos/trojan-forge-ottmsbkk6.png',
     notes: {
       top: ['Cinnamon', 'Orange Blossom', 'Cardamom', 'Bergamot'],
@@ -58,10 +58,10 @@ const PERFUMES = [
   {
     id: 'haydara',
     nameEn: 'Haydara',
-    story: "During the historic 'Battle of Khaybar', when the fortresses stood unbroken and fear filled the battlefield, Ali carried the banner with unmatched bravery. With unwavering resolve, he faced the formidable warrior 'Marhab', turning the tide of battle and sealing a moment that would echo through history as a testament to valor and faith.",
+    story: 'Inspired by "oud for greatness". During the historic "Battle of Khaybar", when the fortresses stood unbroken and fear filled the battlefield, Ali carried the banner with unmatched bravery. With unwavering resolve, he faced the formidable warrior "Marhab", turning the tide of battle and sealing a moment that would echo through history as a testament to valor and faith.',
     category: 'winter',
-    price: 450,
-    originalPrice: 500,
+    price: 300,
+    originalPrice: 360,
     image: 'photos/1.png',
     notes: {
       top: ['Saffron', 'Nutmeg', 'Lavender'],
@@ -69,4 +69,15 @@ const PERFUMES = [
       base: ['Patchouli', 'Musk']
     }
   },
+   {
+    id: 'Ramadan Bundle',
+    nameEn: 'Ramadan Bundle',
+    story: '"Osiris" Inspired by"Stronger With You Intensely" & "Haydara" Inspired by "oud for greatness"',
+    category: 'offers',
+    price: 499,
+    originalPrice: 670,
+    image: 'photos/FLORA_Onboarding_Ramadan_Bundle_Display_2026-02-18_00-13.png',
+  
+  }
+
 ];

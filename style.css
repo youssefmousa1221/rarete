@@ -705,10 +705,6 @@ body {
   margin: 0 auto;
 }
 
-.categories-swiper {
-  width: 100%;
-  padding: 0 0 40px 0;
-}
 
 .categories-swiper .swiper-slide {
   height: auto;
@@ -817,6 +813,26 @@ body {
   background-color: #f5f5f5;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .category-card[data-category="all"] .card-bg {
   background-image: url('photos/Rarete-Heritage-3zumxsjm0.png');
 }
@@ -832,9 +848,23 @@ body {
 .category-card[data-category="offers"] .card-bg {
   background-image: url('photos/Rarete-Bundle-rq517j0oy.png');
 }
-.category-card[data-category="For Her"] .card-bg {
-  background-image: url('photos/rarete-centered-0 (1)3.png');
+.category-card[data-category="forher"] .card-bg {
+  background-image: url('photos/rarete-centered-0 (1).png');
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .category-card .card-label {
   position: absolute;
@@ -1061,6 +1091,18 @@ body {
   opacity: 0.7;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 .hero-image {
   aspect-ratio: 4/5;
   background-image: url('photos/Rarete-Heritage-3zumxsjm0.png');
@@ -1069,6 +1111,20 @@ body {
   border-radius: 16px;
   min-height: 300px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ===== Featured Section ===== */
 .featured-section {
@@ -1676,6 +1732,12 @@ body {
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 0 40px 0;
+  overflow: hidden;
+  overflow-x: hidden;
+}
+
+.featured-swiper .swiper-wrapper {
+  overflow: visible;
 }
 
 .featured-swiper .swiper-slide {
