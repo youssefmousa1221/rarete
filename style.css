@@ -30,6 +30,313 @@ body {
   line-height: 1.5;
   min-width: 0;
   overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Prevent horizontal scroll on all containers */
+#app, 
+.view,
+.top-bar,
+.site-footer,
+.sidebar,
+.cart-sidebar {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* ===== MOBILE RESPONSIVENESS IMPROVEMENTS ===== */
+
+/* Small mobile (under 380px) */
+@media (max-width: 380px) {
+  .top-bar {
+    padding: 0.4rem 0.5rem;
+  }
+  
+  .top-bar-logo-img {
+    height: 24px;
+    max-width: 100px;
+  }
+  
+  .top-bar-nav {
+    gap: 0.35rem;
+  }
+  
+  .top-bar-link {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.4rem;
+  }
+  
+  .top-bar-icon {
+    min-width: 32px;
+    min-height: 32px;
+    padding: 0.25rem;
+  }
+  
+  .top-bar-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  #app {
+    padding-top: 78px;
+    padding-bottom: 1.5rem;
+  }
+  
+  .view {
+    padding: 0.75rem;
+  }
+  
+  .hero-section {
+    padding: 1rem 0.75rem;
+    gap: 1.5rem;
+  }
+  
+  .hero-title {
+    font-size: 1.75rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-image {
+    min-height: 220px;
+    border-radius: 12px;
+  }
+  
+  .featured-section {
+    padding: 2rem 0.75rem;
+  }
+  
+  .section-title {
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .featured-card-info {
+    padding: 0.75rem;
+  }
+  
+  .featured-card-info h3 {
+    font-size: 0.9rem;
+  }
+  
+  .featured-card-price {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .btn-add-to-cart {
+    padding: 0.6rem;
+    font-size: 0.8rem;
+  }
+  
+  .categories-section {
+    padding: 0.75rem;
+  }
+  
+  .category-card {
+    min-height: 120px;
+    border-radius: 10px;
+  }
+  
+  .category-card .card-label {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.75rem;
+  }
+  
+  .perfume-grid {
+    gap: 0.5rem;
+  }
+  
+  .perfume-card h3 {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.6rem 0.2rem;
+  }
+  
+  .perfume-card-price {
+    font-size: 0.8rem;
+    padding: 0 0.6rem 0.5rem;
+  }
+  
+  .product-detail {
+    padding-bottom: 1.5rem;
+  }
+  
+  .product-detail .product-image {
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
+  
+  .product-info h2 {
+    font-size: 1.15rem;
+  }
+  
+  .product-name-en {
+    font-size: 0.95rem;
+  }
+  
+  .product-story {
+    font-size: 0.9rem;
+  }
+  
+  .product-inspired {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .product-price-section {
+    margin: 1rem 0;
+  }
+  
+  .product-price {
+    font-size: 1.35rem;
+  }
+  
+  .btn-add-to-cart-product {
+    padding: 0.85rem;
+    font-size: 0.95rem;
+  }
+  
+  .product-notes {
+    padding: 1rem;
+    margin: 1.5rem 0;
+  }
+  
+  .product-notes h3 {
+    font-size: 1rem;
+  }
+  
+  .note-section h4 {
+    font-size: 0.8rem;
+  }
+  
+  .note-section li {
+    font-size: 0.85rem;
+  }
+  
+  .site-footer {
+    padding: 1.5rem 0.75rem 4rem;
+  }
+  
+  .footer-center {
+    margin-bottom: 1rem;
+  }
+  
+  .footer-heading {
+    font-size: 1.1rem;
+  }
+  
+  .footer-slogan {
+    font-size: 0.85rem;
+  }
+  
+  .cart-sidebar {
+    padding: 1.5rem 1rem;
+  }
+  
+  .cart-sidebar-header h2 {
+    font-size: 1.25rem;
+  }
+  
+  .cart-item {
+    padding: 0.75rem 0;
+    gap: 0.75rem;
+  }
+  
+  .cart-item-img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .cart-item-info h4 {
+    font-size: 0.85rem;
+  }
+  
+  .cart-item-info p {
+    font-size: 0.75rem;
+  }
+  
+  .cart-total {
+    font-size: 1.1rem;
+  }
+  
+  .featured-swiper .swiper-button-next,
+  .featured-swiper .swiper-button-prev {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .categories-swiper .swiper-button-next,
+  .categories-swiper .swiper-button-prev {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .page-title {
+    font-size: 1.25rem;
+  }
+  
+  .back-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 1.1rem;
+    min-height: 38px;
+  }
+}
+
+/* Medium mobile (381px - 479px) */
+@media (min-width: 381px) and (max-width: 479px) {
+  .top-bar {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .top-bar-link {
+    font-size: 0.75rem;
+  }
+  
+  #app {
+    padding-top: 80px;
+  }
+  
+  .hero-title {
+    font-size: 1.9rem;
+  }
+  
+  .hero-image {
+    min-height: 250px;
+  }
+  
+  .category-card {
+    min-height: 130px;
+  }
+  
+  .perfume-grid {
+    gap: 0.6rem;
+  }
+}
+
+/* Large mobile / small tablet (480px - 599px) */
+@media (min-width: 480px) and (max-width: 599px) {
+  #app {
+    padding-top: 84px;
+  }
+  
+  .hero-section {
+    padding: 1.5rem;
+  }
+  
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  
+  .hero-image {
+    min-height: 280px;
+  }
+  
+  .category-card {
+    min-height: 150px;
+  }
 }
 
 /* إخفاء عناصر للقارئ فقط */
@@ -88,6 +395,43 @@ body {
   min-width: 0;
   white-space: nowrap;
   order: 0;
+  display: flex;
+  align-items: center;
+}
+
+.top-bar-logo-img {
+  height: 28px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.top-bar-logo-text {
+  display: none;
+  font-family: var(--font-en);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #fff;
+}
+
+.top-bar-logo-text.show {
+  display: inline;
+}
+
+@media (min-width: 400px) {
+  .top-bar-logo-img {
+    height: 32px;
+    max-width: 140px;
+  }
+}
+
+@media (min-width: 768px) {
+  .top-bar-logo-img {
+    height: 36px;
+    max-width: 160px;
+  }
 }
 
 /* الروابط تظهر على كل الأحجام — صف ثانٍ على الموبايل، في الوسط على الشاشات الكبيرة */
@@ -543,7 +887,7 @@ body {
 
 #app {
   min-height: 100vh;
-  padding-top: 82px; /* هيدر صفين: لوجو + أيقونات ثم روابط */
+  padding-top: 82px;
   padding-bottom: 2rem;
   min-width: 0;
 }
@@ -556,7 +900,7 @@ body {
 
 @media (min-width: 768px) {
   #app {
-    padding-top: 56px; /* هيدر صف واحد */
+    padding-top: 56px;
   }
 }
 
@@ -576,7 +920,6 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hero Section Animations */
 @keyframes heroFadeIn {
   from { opacity: 0; transform: translateX(-30px); }
   to { opacity: 1; transform: translateX(0); }
@@ -612,7 +955,6 @@ body {
   to { opacity: 1; transform: rotate(0); }
 }
 
-/* Staggered animations for grids */
 @keyframes slideInUp {
   from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
@@ -700,11 +1042,22 @@ body {
 
 /* ===== الصفحة الرئيسية — Categories Section with Swiper ===== */
 .categories-section {
-  padding: 1rem;
+  padding: 1rem 0.5rem 3rem;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
 }
 
+.categories-swiper {
+  padding: 0 44px 48px;
+  overflow: hidden;
+}
+
+@media (max-width: 480px) {
+  .categories-swiper {
+    padding: 0 40px 40px;
+  }
+}
 
 .categories-swiper .swiper-slide {
   height: auto;
@@ -813,26 +1166,6 @@ body {
   background-color: #f5f5f5;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .category-card[data-category="all"] .card-bg {
   background-image: url('photos/Rarete-Heritage-3zumxsjm0.png');
 }
@@ -848,23 +1181,10 @@ body {
 .category-card[data-category="offers"] .card-bg {
   background-image: url('photos/Rarete-Bundle-rq517j0oy.png');
 }
+
 .category-card[data-category="forher"] .card-bg {
   background-image: url('photos/rarete-centered-0 (1).png');
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .category-card .card-label {
   position: absolute;
@@ -958,9 +1278,9 @@ body {
 
 /* ===== صفحة تفاصيل العطر ===== */
 .product-detail {
-  max-width: 560px;
+  max-width: 100%;
   margin: 0 auto;
-  padding-bottom: 2rem;
+  padding: 0 1rem 2rem;
   width: 100%;
 }
 
@@ -973,6 +1293,33 @@ body {
   background-color: #f5f5f5;
   margin-bottom: 1.5rem;
   border: 1px solid var(--border);
+}
+
+/* Mobile: bigger image */
+@media (max-width: 479px) {
+  .product-detail .product-image {
+    max-height: 350px;
+  }
+}
+
+/* Desktop: image on the LEFT, content on the RIGHT */
+@media (min-width: 768px) {
+  .product-detail-grid {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .product-detail-grid .product-image {
+    width: 50%;
+    flex-shrink: 0;
+    margin-bottom: 0;
+    margin-right: 2.5rem;
+  }
+  
+  .product-detail-grid .product-info {
+    flex: 1;
+  }
 }
 
 .product-info h2 {
@@ -995,6 +1342,17 @@ body {
   margin-bottom: 1rem;
   line-height: 1.7;
 }
+
+.product-inspired {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #d4af37;
+  margin-bottom: -1rem;
+}
+
+.product-inspired::before {
+    content:"";
+    display:block;}
 
 .product-price {
   font-size: 1rem;
@@ -1091,18 +1449,6 @@ body {
   opacity: 0.7;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 .hero-image {
   aspect-ratio: 4/5;
   background-image: url('photos/Rarete-Heritage-3zumxsjm0.png');
@@ -1111,20 +1457,6 @@ body {
   border-radius: 16px;
   min-height: 300px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* ===== Featured Section ===== */
 .featured-section {
@@ -1219,17 +1551,42 @@ body {
 }
 
 /* ===== Product Detail ===== */
+.product-detail {
+  max-width: 100%;
+  padding: 0 1rem 2rem;
+}
+
 .product-detail-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   max-width: 900px;
   margin: 0 auto;
 }
 
+.product-detail-grid .product-image {
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 380px;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
 @media (min-width: 768px) {
   .product-detail-grid {
-    grid-template-columns: 1fr 1fr;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2.5rem;
+  }
+  .product-detail-grid .product-image {
+    width: 42%;
+    max-width: 400px;
+    margin: 0;
+    order: 0;
+  }
+  .product-detail-grid .product-info {
+    flex: 1;
+    order: 1;
   }
 }
 
@@ -1731,13 +2088,19 @@ body {
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 0 0 40px 0;
+  padding: 0 44px 48px;
   overflow: hidden;
-  overflow-x: hidden;
+  position: relative;
+}
+
+@media (max-width: 480px) {
+  .featured-swiper {
+    padding: 0 40px 40px;
+  }
 }
 
 .featured-swiper .swiper-wrapper {
-  overflow: visible;
+  align-items: stretch;
 }
 
 .featured-swiper .swiper-slide {

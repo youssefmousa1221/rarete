@@ -8,11 +8,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Kufi+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-  <link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="new-style.css" />
 </head>
 <body>
   <header class="top-bar">
-    <a href="#" class="top-bar-logo" data-nav="home">Rareté</a>
+    <a href="#" class="top-bar-logo" data-nav="home" title="Rareté">
+      <img src="photos/Rarete.png" alt="Rareté" class="top-bar-logo-img" onerror="this.style.display='none';this.nextElementSibling&&this.nextElementSibling.classList.add('show');">
+      <span class="top-bar-logo-text">Rareté</span>
+    </a>
 <nav class="top-bar-nav">
       <a href="#" class="top-bar-link" data-nav="home">Home</a>
       <a href="#" class="top-bar-link" data-category="all">All</a>

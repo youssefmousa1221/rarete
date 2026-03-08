@@ -16,8 +16,10 @@ const PERFUMES = [
   {
     id: 'zeus',
     nameEn: 'Zeus',
-    story: 'Inspired by "Ombre Nomade".The scent of Greek power and wisdom. Zeus, lord of Olympus, gives you an unforgettable presence.',
-    category: 'winter',
+    story: 'The scent of Greek power and wisdom. Zeus, lord of Olympus, gives you an unforgettable presence.',
+    storyAr: 'رائحة القوة والحكمة اليونانية. زيوس، سيد الأولمب، يمنحك حضوراً لا يُنسى.',
+    inspiredBy: 'Ombre Nomade',
+    categories: ['winter'],
     price: 330,
     originalPrice: 395,
     image: 'photos/zeus-perfume-8yeabxz2j.png',
@@ -30,8 +32,10 @@ const PERFUMES = [
   {
     id: 'osiris',
     nameEn: 'Osiris',
-    story: 'Inspired by "Stronger With You Intensely". In ancient Egyptian mythology, Osiris was the god of the afterlife, a figure of wisdom, justice, and transformation — a force that ruled beyond death and guided souls toward new beginnings.',
-    category: 'winter',
+    story: 'In ancient Egyptian mythology, Osiris was the god of the afterlife, a figure of wisdom, justice, and transformation — a force that ruled beyond death and guided souls toward new beginnings.',
+    storyAr: 'في الأسطورة المصرية القديمة، كان أوزيس إله العالم الآخر، تجسيداً للحكمة والعدالة والتحول — قوة تحكم ما بعد الموت وترشد الأرواح نحو بداية جديدة.',
+    inspiredBy: 'Stronger With You Intensely',
+    categories: ['winter'],
     price: 260,
     originalPrice: 310,
     image: 'photos/download (6).png',
@@ -44,8 +48,10 @@ const PERFUMES = [
   {
     id: 'trojan',
     nameEn: 'Trojan',
-    story: 'Inspired by "ALTHAÏR". In ancient Greek mythology, the Trojan Horse was the wooden structure used by the Greeks to enter the city of Troy after years of war — a masterstroke of intelligence that changed history forever.',
-    category: 'winter',
+    story: 'In ancient Greek mythology, the Trojan Horse was the wooden structure used by the Greeks to enter the city of Troy after years of war — a masterstroke of intelligence that changed history forever.',
+    storyAr: 'في الأسطورة اليونانية القديمة، كان الحصان الخشبي الذي استخدمه اليونانيون للدخول إلى مدينة طروادة بعد سنوات من الحرب — خطة ذكية غيرت التاريخ إلى الأبد.',
+    inspiredBy: 'ALTHAÏR',
+    categories: ['winter'],
     price: 280,
     originalPrice: 335,
     image: 'photos/trojan-forge-ottmsbkk6.png',
@@ -58,8 +64,10 @@ const PERFUMES = [
   {
     id: 'haydara',
     nameEn: 'Haydara',
-    story: 'Inspired by "oud for greatness". During the historic "Battle of Khaybar", when the fortresses stood unbroken and fear filled the battlefield, Ali carried the banner with unmatched bravery. With unwavering resolve, he faced the formidable warrior "Marhab", turning the tide of battle and sealing a moment that would echo through history as a testament to valor and faith.',
-    category: 'winter',
+    story: 'During the historic "Battle of Khaybar", when the fortresses stood unbroken and fear filled the battlefield, Ali carried the banner with unmatched bravery. With unwavering resolve, he faced the formidable warrior "Marhab", turning the tide of battle and sealing a moment that would echo through history as a testament to valor and faith.',
+    storyAr: 'خلال معركة خيبر التاريخية، عندما كانت الحصون منيعة والخوف يملأ ساحة المعركة، حمل علي الراية بشجاعة لا نظير لها. بعزم راسخ، واجه المقاتل المخيف "مرحب"، وحول مسار المعركة وختم لحظة ستتردد أصداؤها في التاريخ كشهادة على الشجاعة والإيمان.',
+    inspiredBy: 'Oud for Greatness',
+    categories: ['winter'],
     price: 300,
     originalPrice: 360,
     image: 'photos/1.png',
@@ -69,15 +77,32 @@ const PERFUMES = [
       base: ['Patchouli', 'Musk']
     }
   },
-   {
+  {
     id: 'Ramadan Bundle',
     nameEn: 'Ramadan Bundle',
-    story: '"Osiris" Inspired by"Stronger With You Intensely" & "Haydara" Inspired by "oud for greatness"',
-    category: 'offers',
+    story: 'A special bundle featuring Osiris and Haydara fragrances.',
+    storyAr: 'حزمة خاصة تحتوي على عطرين أوزيريس وحيدرا.',
+    inspiredBy: '',
+    categories: ['offers','winter'],
     price: 499,
     originalPrice: 670,
     image: 'photos/FLORA_Onboarding_Ramadan_Bundle_Display_2026-02-18_00-13.png',
-  
-  }
+  },
+  {
+    id: 'Babel',
+    nameEn: 'Babel',
+    story: 'Rising from the lands between the Tigris and Euphrates, Babylon stood as a beacon of civilization, where legends were born and empires were crowned. Under the reign of Nebuchadnezzar II, its walls touched the sky and its gates shone in blue and gold. Within its glory stood wonders like the Hanging Gardens of Babel — a testament to vision, power, and eternal beauty.',
+    storyAr: 'توسطت أراضي ما بين النهرين، وقف بابل شعلة للحضارة حيث وُلدت الأساطير وتوجت الإمبراطوريات. في عهد نبوخذنصر الثاني،لامست جدران السماء وأبوابهم تألق بالأزرق والذهب. في مجدها وقفت عجائب مثل الحدائق المعلقة في بابل — شهادة على الرؤية والقوة والجمال الأبدي.',
+    inspiredBy: 'Khamrah Qahwa',
+    categories: ['winter','forher'],
+    price: 280,
+    originalPrice: 335,
+    image: 'photos/babel-Ishtar Gate (1).png',
+    notes: {
+      top: ['Cinnamon', 'Cardamom', 'Ginger'],
+      heart: ['Praline','Candied Fruits','White Flowers'],
+      base: ['Vanilla', 'Coffee','Tonka Bean','Benzoin','Musk']
+    }
+  },
 
 ];

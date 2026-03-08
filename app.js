@@ -166,7 +166,7 @@
         <div class="cart-item-img" style="background-image:url('${item.image}')"></div>
         <div class="cart-item-info">
           <h4>${item.name}</h4>
-          <p>${item.price} EGP × ${item.quantity}</p>
+          <p>${item.price} EGP - 50ml × ${item.quantity}</p>
         </div>
         <button class="cart-item-remove" data-id="${item.id}">×</button>
       </div>
@@ -198,14 +198,14 @@
             <div class="cart-page-item-img" style="background-image:url('${item.image}')"></div>
             <div class="cart-page-item-info">
               <h3>${item.name}</h3>
-              <p class="cart-item-price">${item.price} EGP</p>
+              <p class="cart-item-price">${item.price} EGP - 50ml</p>
             </div>
             <div class="cart-page-item-controls">
               <button class="qty-btn" data-id="${item.id}" data-action="decrease">−</button>
               <span class="qty-value">${item.quantity}</span>
               <button class="qty-btn" data-id="${item.id}" data-action="increase">+</button>
             </div>
-            <div class="cart-page-item-total">${item.price * item.quantity} EGP</div>
+            <div class="cart-page-item-total">${item.price * item.quantity} EGP - 50ml</div>
             <button class="cart-page-item-remove" data-id="${item.id}">×</button>
           </div>
         `).join('')}
@@ -268,7 +268,7 @@
             ${cart.map(item => `
               <div class="checkout-item">
                 <span>${item.name} × ${item.quantity}</span>
-                <span>${item.price * item.quantity} EGP</span>
+                <span>${item.price * item.quantity} EGP - 50ml</span>
               </div>
             `).join('')}
           </div>
@@ -278,10 +278,11 @@
           </div>
         </div>
         <div class="checkout-section">
-          <h2>Contact Information</h2>
-          <input type="text" id="checkout-name" placeholder="Your Name" required>
-          <input type="tel" id="checkout-phone" placeholder="Phone Number" required>
-          <textarea id="checkout-address" placeholder="Delivery Address" rows="3"></textarea>
+          <h2>Contact Information <span class="required-hint">*required</span></h2>
+          <input type="text" id="checkout-name" placeholder="Your Name *" required>
+          <input type="tel" id="checkout-phone" placeholder="Phone * (010/011/012/015 - 11 digits)" required maxlength="11" pattern="0(10|11|12|15)\d{8}" inputmode="numeric">
+          <input type="tel" id="checkout-emergency" placeholder="Emergency Phone (optional)" maxlength="11" inputmode="numeric">
+          <textarea id="checkout-address" placeholder="Delivery Address *" rows="3" required></textarea>
         </div>
         <button class="btn-submit-order" id="btn-submit-order">Complete Order</button>
       </div>
@@ -291,47 +292,64 @@
     if (submitBtn) {
       submitBtn.addEventListener('click', function() {
         const name = document.getElementById('checkout-name').value.trim();
-        const phone = document.getElementById('checkout-phone').value.trim();
+        const phone = document.getElementById('checkout-phone').value.trim().replace(/\s/g, '');
+        const emergency = document.getElementById('checkout-emergency');
+        const emergencyPhone = emergency ? emergency.value.trim().replace(/\s/g, '') : '';
         const address = document.getElementById('checkout-address').value.trim();
 
-        if (!name || !phone) {
-          alert('Please fill in your name and phone number');
+        if (!name || !phone || !address) {
+          alert('Please fill in your name, phone number, and delivery address');
+          return;
+        }
+        if (!/^0(10|11|12|15)\d{8}$/.test(phone)) {
+          alert('Phone must be 11 digits starting with 010, 011, 012, or 015');
+          return;
+        }
+        if (emergencyPhone && !/^0(10|11|12|15)\d{8}$/.test(emergencyPhone)) {
+          alert('Emergency phone must be 11 digits starting with 010, 011, 012, or 015');
           return;
         }
 
-        sendOrderToInstagram(name, phone, address);
+        submitOrder(name, phone, address, emergencyPhone);
       });
     }
   }
 
-  function sendOrderToInstagram(name, phone, address) {
-    let message = `🛍️ *New Order from Rareté*\n\n`;
-    message += `*Customer:* ${name}\n`;
-    message += `*Phone:* ${phone}\n`;
-    if (address) message += `*Address:* ${address}\n`;
-    message += `\n*Items:*\n`;
+  function submitOrder(name, phone, address, emergencyPhone) {
+    const orderPayload = {
+      name: name,
+      phone: phone,
+      address: address,
+      emergency_phone: emergencyPhone || undefined,
+      items: cart.map(item => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity
+      }))
+    };
 
-    cart.forEach(item => {
-      message += `• ${item.name} × ${item.quantity} = ${item.price * item.quantity} EGP\n`;
-    });
+    const apiUrl = (window.location.origin.startsWith('http') ? window.location.origin : 'http://localhost:3000') + '/api/orders';
 
-    message += `\n*Total:* ${getCartTotal()} EGP`;
-
-    // Copy message to clipboard and open Instagram
-    navigator.clipboard.writeText(message).then(function() {
-      // Open Instagram
-      window.open(INSTAGRAM_URL, '_blank');
-
-      // Clear cart after order
-      cart = [];
-      localStorage.setItem('cart', JSON.stringify(cart));
-      updateCartCount();
-      renderCartSidebar();
-
-      alert('Order message copied to clipboard! Please paste it into a direct message on our Instagram page.');
-      showView('home');
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderPayload)
+    }).then(function(res) {
+      return res.json().then(function(data) {
+        if (res.ok) {
+          cart = [];
+          localStorage.setItem('cart', JSON.stringify(cart));
+          updateCartCount();
+          renderCartSidebar();
+          alert('Order submitted successfully! We will contact you soon.');
+          showView('home');
+        } else {
+          throw new Error(data.error || 'Order failed');
+        }
+      });
     }).catch(function(err) {
-      alert('Failed to copy message. Please try again.');
+      alert('Could not submit order. Make sure the server is running (npm start) and try again.');
     });
   }
 
@@ -359,7 +377,7 @@
 
   function getPerfumesByCategory(cat) {
     if (cat === 'all') return PERFUMES;
-    return PERFUMES.filter(p => p.category === cat);
+    return PERFUMES.filter(p => p.categories && p.categories.includes(cat));
   }
 
   function renderCategory(cat, searchList, searchQuery) {
@@ -382,7 +400,7 @@
         <div class="perfume-card-img" style="background-image:url('${p.image}')"></div>
         <div class="perfume-card-info">
           <h3>${p.nameEn}</h3>
-          <p class="perfume-card-price">${p.originalPrice ? `<span class="original-price">${p.originalPrice}</span> ` : ''}${p.price} EGP</p>
+          <p class="perfume-card-price">${p.originalPrice ? `<span class="original-price">${p.originalPrice}</span> ` : ''}${p.price} EGP - 50ml</p>
         </div>
       </article>
     `).join('');
@@ -397,39 +415,7 @@
   function renderFeaturedPerfumes() {
     if (!featuredPerfumes) return;
     // Edit this array to change which perfumes appear in Best Sellers - add or remove perfume IDs
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    const bestSellerIds = ['osiris', 'trojan', 'haydara'];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    const bestSellerIds = ['osiris', 'trojan', 'haydara','Babel'];
     const featured = bestSellerIds.map(id => PERFUMES.find(p => p.id === id)).filter(Boolean);
     featuredPerfumes.innerHTML = featured.map(p => `
       <div class="swiper-slide">
@@ -437,7 +423,7 @@
           <div class="featured-card-img" style="background-image:url('${p.image}')"></div>
           <div class="featured-card-info">
             <h3>${p.nameEn}</h3>
-            <p class="featured-card-price">${p.originalPrice ? `<span class="original-price">${p.originalPrice}</span> ` : ''}${p.price} EGP</p>
+            <p class="featured-card-price">${p.originalPrice ? `<span class="original-price">${p.originalPrice}</span> ` : ''}${p.price} EGP - 50ml</p>
             <button class="btn-add-to-cart" data-id="${p.id}">Add to Cart</button>
           </div>
         </article>
@@ -461,31 +447,31 @@
     });
 
     // Initialize Swiper after rendering
-    if (!featuredSwiper) {
-      featuredSwiper = new Swiper('.featured-swiper', {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        loop: true,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
+    if (featuredSwiper) featuredSwiper.destroy(true, true);
+    featuredSwiper = new Swiper('.featured-swiper', {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      loop: true,
+      grabCursor: true,
+      pagination: {
+        el: '.featured-swiper .swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.featured-swiper .swiper-button-next',
+        prevEl: '.featured-swiper .swiper-button-prev',
+      },
+      breakpoints: {
+        480: {
+          slidesPerView: 2,
+          spaceBetween: 20,
         },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-        breakpoints: {
-          480: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          768: {
-            slidesPerView: 3,
-            spaceBetween: 30,
-          }
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 30,
         }
-      });
-    }
+      }
+    });
   }
 
   function openProduct(id) {
@@ -518,16 +504,22 @@
       </div>
     ` : '';
     
+    const storyHTML = `
+      <p class="product-story">${p.story}</p>
+      ${p.storyAr ? `<p class="product-story-ar">${p.storyAr}</p>` : ''}
+    `;
+    
     productDetail.innerHTML = `
       <div class="product-detail-grid">
         <div class="product-image" style="background-image:url('${p.image}')"></div>
         <div class="product-info">
           <h2>${p.nameEn}</h2>
-          <p class="product-story">${p.story}</p>
+          ${storyHTML}
+          ${p.inspiredBy ? `<p class="product-inspired">Inspired by "${p.inspiredBy}"</p>` : ''}
           ${notesHTML}
           <div class="product-price-section">
             ${p.originalPrice ? `<span class="product-original-price">${p.originalPrice} EGP</span>` : ''}
-            <span class="product-price">${p.price} EGP</span>
+            <span class="product-price">${p.price} EGP - 50ml</span>
           </div>
           <button class="btn-add-to-cart-product" data-id="${p.id}">Add to Cart</button>
         </div>
@@ -664,11 +656,14 @@
   }
 
   // Initialize Swiper for categories
-  if (!categoriesSwiper) {
+  if (categoriesSwiper) categoriesSwiper.destroy(true, true);
+  var catEl = document.querySelector('.categories-swiper');
+  if (catEl) {
     categoriesSwiper = new Swiper('.categories-swiper', {
       slidesPerView: 1,
       spaceBetween: 20,
-      loop: false,
+      loop: true,
+      grabCursor: true,
       pagination: {
         el: '.categories-pagination',
         clickable: true,
