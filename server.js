@@ -5,6 +5,7 @@ const fs = require('fs');
 const Database = require('better-sqlite3');
 const nodemailer = require('nodemailer');
 const XLSX = require('xlsx');
+const https = require('https');
 require('dotenv').config();
 
 const app = express();
@@ -67,6 +68,17 @@ function isValidEgyptPhone(phone) {
   if (!phone || typeof phone !== 'string') return false;
   const p = phone.replace(/\s/g, '');
   return /^(010|011|012|015)\d{8}$/.test(p);
+}
+
+// Telegram notification
+function sendTelegramMessage(text) {
+  const token = process.env.TELEGRAM_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) return;
+
+  const message = encodeURIComponent(text);
+  https.get(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${message}&parse_mode=HTML`)
+    .on('error', err => console.error('Telegram error:', err.message));
 }
 
 // Email transporter
@@ -193,6 +205,18 @@ app.post('/api/orders', (req, res) => {
     };
 
     sendOrderEmail(orderData);
+
+    // Send Telegram notification
+    const itemLines = items.map(i => `• ${i.name} × ${i.quantity} = ${i.price * i.quantity} EGP`).join('\n');
+    sendTelegramMessage(
+`🛍️ أوردر جديد #${orderId}
+👤 الاسم: ${name}
+📞 التليفون: ${phone}
+📍 العنوان: ${address}
+📦 المنتجات:
+${itemLines}
+💰 الإجمالي: ${total} EGP`
+    );
 
     res.json({
       success: true,
