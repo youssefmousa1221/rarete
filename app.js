@@ -74,6 +74,7 @@
   const cartTotalPrice = document.getElementById('cart-total-price');
 
   let currentCategory = 'all';
+  let currentProductId = null;
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
   // Cart Functions
@@ -87,7 +88,6 @@
 
   function addToCart(productId, quantity = 1) {
     const product = PERFUMES.find(p => p.id === productId);
-    // ✅ منع إضافة out of stock للكارت بصمت
     if (!product || product.outOfStock) return;
 
     const existingItem = cart.find(item => item.id === productId);
@@ -155,7 +155,7 @@
 
   function renderCartSidebar() {
     if (!cartSidebarContent) return;
-    
+
     if (cart.length === 0) {
       cartSidebarContent.innerHTML = '<p class="cart-empty">Your cart is empty</p>';
       if (cartTotalPrice) cartTotalPrice.textContent = '0 EGP';
@@ -192,6 +192,15 @@
       return;
     }
 
+
+
+
+
+
+
+
+
+
     cartContent.innerHTML = `
       <div class="cart-items">
         ${cart.map(item => `
@@ -224,6 +233,15 @@
       </div>
     `;
 
+
+
+
+
+
+
+
+
+
     cartContent.querySelectorAll('.qty-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         const id = btn.dataset.id;
@@ -248,7 +266,7 @@
     const checkoutBtn = document.getElementById('btn-checkout-full');
     if (checkoutBtn) {
       checkoutBtn.addEventListener('click', function() {
-        showView('checkout');
+        navigateTo('checkout');
       });
     }
   }
@@ -342,7 +360,7 @@
     cart = [];
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
-    showView('home');
+    navigateTo('home');
     alert('✅ تم إرسال طلبك! شكراً لك 🌹');
   }
 
@@ -355,18 +373,47 @@
     });
   }
 
+  // ✅ showView بدون history push — للاستخدام الداخلي فقط
   function showView(name) {
     Object.values(views).forEach(v => {
       if (v) v.classList.remove('active');
     });
     if (views[name]) views[name].classList.add('active');
-    
-    if (name === 'cart') {
-      renderCart();
-    } else if (name === 'checkout') {
-      renderCheckout();
-    }
+    window.scrollTo(0, 0);
+
+    if (name === 'cart') renderCart();
+    else if (name === 'checkout') renderCheckout();
   }
+
+  // ✅ navigateTo — بيعمل showView + يضيف للـ history
+  function navigateTo(name, state) {
+    const historyState = state || { view: name, category: currentCategory, productId: currentProductId };
+    history.pushState(historyState, '', '');
+    showView(name);
+  }
+
+  // ✅ زرار Back في المتصفح
+  window.addEventListener('popstate', function(e) {
+    if (e.state) {
+      const { view, category, productId } = e.state;
+      if (view === 'category' && category) {
+        currentCategory = category;
+        renderCategory(category);
+        showView('category');
+      } else if (view === 'product' && productId) {
+        currentProductId = productId;
+        const p = PERFUMES.find(x => x.id === productId);
+        if (p) {
+          renderProductDetail(p);
+          showView('product');
+        }
+      } else {
+        showView(view || 'home');
+      }
+    } else {
+      showView('home');
+    }
+  });
 
   function getPerfumesByCategory(cat) {
     if (cat === 'all') return PERFUMES;
@@ -387,22 +434,27 @@
     renderPerfumeList(list);
   }
 
+
+
+
+
+
   function renderPerfumeList(list) {
     perfumeGrid.innerHTML = list.map(p => {
       const priceHtml = p.outOfStock
         ? '<span class="out-of-stock-badge">Out of Stock</span>'
         : (p.originalPrice ? `<span class="original-price">${p.originalPrice}</span> ${p.price} EGP - 50ml` : `${p.price} EGP - 50ml`);
+      const genderHtml = p.gender ? `<span class="gender-badge gender-${p.gender}">${p.gender.charAt(0).toUpperCase() + p.gender.slice(1)}</span>` : '';
       return `
       <article class="perfume-card${p.outOfStock ? ' out-of-stock' : ''}" data-id="${p.id}">
         <div class="perfume-card-img" style="background-image:url('${p.image}')"></div>
         <div class="perfume-card-info">
-          <h3>${p.nameEn}</h3>
+          <h3>${p.nameEn} ${genderHtml}</h3>
           <p class="perfume-card-price">${priceHtml}</p>
         </div>
       </article>`;
     }).join('');
 
-    // ✅ كل البرفانات بتفتح صفحة التفاصيل سواء out of stock أو لأ
     perfumeGrid.querySelectorAll('.perfume-card').forEach(el => {
       el.addEventListener('click', function() {
         openProduct(el.dataset.id);
@@ -410,25 +462,30 @@
     });
   }
 
+
+
+
+  
+
   let featuredSwiper = null;
   let categoriesSwiper = null;
 
   function renderFeaturedPerfumes() {
     if (!featuredPerfumes) return;
-    const bestSellerIds = ['osiris', 'trojan', 'haydara', 'Babel'];
+    const bestSellerIds = BESTSELLERS;
     const featured = bestSellerIds.map(id => PERFUMES.find(p => p.id === id)).filter(Boolean);
     featuredPerfumes.innerHTML = featured.map(p => {
       const priceHtml = p.outOfStock
         ? '<span class="out-of-stock-badge">Out of Stock</span>'
         : (p.originalPrice ? `<span class="original-price">${p.originalPrice}</span> ${p.price} EGP - 50ml` : `${p.price} EGP - 50ml`);
-      // ✅ زرار Add to Cart بيظهر بس لو مش out of stock
+      const genderHtml = p.gender ? `<span class="gender-badge gender-${p.gender}">${p.gender.charAt(0).toUpperCase() + p.gender.slice(1)}</span>` : '';
       const btnHtml = p.outOfStock ? '' : `<button class="btn-add-to-cart" data-id="${p.id}">Add to Cart</button>`;
       return `
       <div class="swiper-slide">
         <article class="featured-card${p.outOfStock ? ' out-of-stock' : ''}" data-id="${p.id}">
           <div class="featured-card-img" style="background-image:url('${p.image}')"></div>
           <div class="featured-card-info">
-            <h3>${p.nameEn}</h3>
+            <h3>${p.nameEn} ${genderHtml}</h3>
             <p class="featured-card-price">${priceHtml}</p>
             ${btnHtml}
           </div>
@@ -436,7 +493,6 @@
       </div>`;
     }).join('');
 
-    // ✅ كل البرفانات بتفتح صفحة التفاصيل
     featuredPerfumes.querySelectorAll('.featured-card').forEach(card => {
       card.addEventListener('click', function(e) {
         if (!e.target.classList.contains('btn-add-to-cart')) {
@@ -474,10 +530,8 @@
     });
   }
 
-  function openProduct(id) {
-    const p = PERFUMES.find(x => x.id === id);
-    if (!p) return;
-
+  // ✅ renderProductDetail منفصلة عشان نستخدمها في popstate
+  function renderProductDetail(p) {
     const notesHTML = p.notes ? `
       <div class="product-notes">
         <h3>Fragrance Notes</h3>
@@ -503,7 +557,8 @@
       ${p.storyAr ? `<p class="product-story-ar">${p.storyAr}</p>` : ''}
     `;
 
-    // ✅ out of stock: بيوري السعر مشطوب + badge بدون زرار
+    const genderHtml = p.gender ? `<p class="product-gender"><span class="gender-badge gender-${p.gender}">${p.gender.charAt(0).toUpperCase() + p.gender.slice(1)}</span></p>` : '';
+
     const priceSectionHtml = p.outOfStock ? `
       <div class="product-price-section">
         ${p.originalPrice ? `<span class="product-original-price">${p.originalPrice} EGP</span>` : ''}
@@ -526,6 +581,7 @@
           ${storyHTML}
           ${p.inspiredBy ? `<p class="product-inspired">Inspired by "${p.inspiredBy}"</p>` : ''}
           ${notesHTML}
+          ${genderHtml}
           ${priceSectionHtml}
         </div>
       </div>
@@ -538,17 +594,32 @@
         alert('Added to cart!');
       });
     }
+  }
 
-    showView('product');
+  function openProduct(id) {
+    const p = PERFUMES.find(x => x.id === id);
+    if (!p) return;
+    currentProductId = id;
+    renderProductDetail(p);
+    navigateTo('product', { view: 'product', category: currentCategory, productId: id });
   }
 
   function openCategory(cat) {
+    currentCategory = cat;
     renderCategory(cat);
-    showView('category');
+    navigateTo('category', { view: 'category', category: cat, productId: null });
   }
 
+  // ✅ زرار الرجوع داخل الصفحة
+  document.querySelectorAll('.back-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      history.back();
+    });
+  });
+
   document.querySelectorAll('[data-nav="home"]').forEach(el => {
-    el.addEventListener('click', (e) => { e.preventDefault(); showView('home'); });
+    el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('home'); });
   });
 
   document.querySelectorAll('[data-nav="category"]').forEach(el => {
@@ -561,7 +632,7 @@
   document.querySelectorAll('[data-nav="cart"]').forEach(el => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
-      showView('cart');
+      navigateTo('cart');
     });
   });
 
@@ -582,7 +653,7 @@
 
   document.getElementById('btn-checkout').addEventListener('click', function() {
     closeCartSidebar();
-    showView('checkout');
+    navigateTo('checkout');
   });
 
   // Share page link
@@ -684,6 +755,9 @@
       }
     });
   }
+
+  // ✅ Set initial history state
+  history.replaceState({ view: 'home', category: 'all', productId: null }, '');
 
   renderFeaturedPerfumes();
   updateCartCount();

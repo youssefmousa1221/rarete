@@ -12,11 +12,13 @@ const CATEGORIES = {
   forher: { title: 'For Her', titleEn: 'For Her' }
 };
 
+const BESTSELLERS = ['osiris', 'trojan', 'Babel']; 
 const PERFUMES = [
   {
     id: 'zeus',
     nameEn: 'Zeus',
     outOfStock: true,
+    gender: 'male',
     story: 'The scent of Greek power and wisdom. Zeus, lord of Olympus, gives you an unforgettable presence.',
     storyAr: 'رائحة القوة والحكمة اليونانية. زيوس، سيد الأولمب، يمنحك حضوراً لا يُنسى.',
     inspiredBy: 'Ombre Nomade',
@@ -34,6 +36,7 @@ const PERFUMES = [
     id: 'osiris',
     nameEn: 'Osiris',
     outOfStock: false,
+    gender: 'male',
     story: 'In ancient Egyptian mythology, Osiris was the god of the afterlife, a figure of wisdom, justice, and transformation — a force that ruled beyond death and guided souls toward new beginnings.',
     storyAr: 'في الأسطورة المصرية القديمة، كان أوزيس إله العالم الآخر، تجسيداً للحكمة والعدالة والتحول — قوة تحكم ما بعد الموت وترشد الأرواح نحو بداية جديدة.',
     inspiredBy: 'Stronger With You Intensely',
@@ -51,6 +54,7 @@ const PERFUMES = [
     id: 'trojan',
     nameEn: 'Trojan',
     outOfStock: false,
+    gender: 'male',
     story: 'In ancient Greek mythology, the Trojan Horse was the wooden structure used by the Greeks to enter the city of Troy after years of war — a masterstroke of intelligence that changed history forever.',
     storyAr: 'في الأسطورة اليونانية القديمة، كان الحصان الخشبي الذي استخدمه اليونانيون للدخول إلى مدينة طروادة بعد سنوات من الحرب — خطة ذكية غيرت التاريخ إلى الأبد.',
     inspiredBy: 'ALTHAÏR',
@@ -68,6 +72,7 @@ const PERFUMES = [
     id: 'haydara',
     nameEn: 'Haydara',
     outOfStock: true,
+    gender: 'male',
     story: 'During the historic "Battle of Khaybar", when the fortresses stood unbroken and fear filled the battlefield, Ali carried the banner with unmatched bravery. With unwavering resolve, he faced the formidable warrior "Marhab", turning the tide of battle and sealing a moment that would echo through history as a testament to valor and faith.',
     storyAr: 'خلال معركة خيبر التاريخية، عندما كانت الحصون منيعة والخوف يملأ ساحة المعركة، حمل علي الراية بشجاعة لا نظير لها. بعزم راسخ، واجه المقاتل المخيف "مرحب"، وحول مسار المعركة وختم لحظة ستتردد أصداؤها في التاريخ كشهادة على الشجاعة والإيمان.',
     inspiredBy: 'Oud for Greatness',
@@ -85,10 +90,11 @@ const PERFUMES = [
     id: 'Ramadan Bundle',
     nameEn: 'Ramadan Bundle',
     outOfStock: true,
+    gender: 'male',
     story: 'A special bundle featuring Osiris and Haydara fragrances.',
     storyAr: 'حزمة خاصة تحتوي على عطرين أوزيريس وحيدرا.',
     inspiredBy: '',
-    categories: ['offers','winter'],
+    categories: ['offers'],
     price: 499,
     originalPrice: 670,
     image: 'photos/FLORA_Onboarding_Ramadan_Bundle_Display_2026-02-18_00-13.png'
@@ -97,6 +103,7 @@ const PERFUMES = [
     id: 'Babel',
     nameEn: 'Babel',
     outOfStock: true,
+    gender: 'unisex',
     story: 'Rising from the lands between the Tigris and Euphrates, Babylon stood as a beacon of civilization, where legends were born and empires were crowned. Under the reign of Nebuchadnezzar II, its walls touched the sky and its gates shone in blue and gold. Within its glory stood wonders like the Hanging Gardens of Babel — a testament to vision, power, and eternal beauty.',
     storyAr: 'توسطت أراضي ما بين النهرين، وقف بابل شعلة للحضارة حيث وُلدت الأساطير وتوجت الإمبراطوريات. في عهد نبوخذنصر الثاني،لامست جدران السماء وأبوابهم تألق بالأزرق والذهب. في مجدها وقفت عجائب مثل الحدائق المعلقة في بابل — شهادة على الرؤية والقوة والجمال الأبدي.',
     inspiredBy: 'Khamrah Qahwa',
@@ -111,4 +118,3 @@ const PERFUMES = [
     }
   }
 ];
-
