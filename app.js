@@ -87,7 +87,8 @@
 
   function addToCart(productId, quantity = 1) {
     const product = PERFUMES.find(p => p.id === productId);
-    if (!product) return;
+    // ✅ منع إضافة out of stock للكارت بصمت
+    if (!product || product.outOfStock) return;
 
     const existingItem = cart.find(item => item.id === productId);
     if (existingItem) {
@@ -316,41 +317,33 @@
   }
 
   function submitOrder(name, phone, address, emergencyPhone) {
-    const orderPayload = {
-      name: name,
-      phone: phone,
-      address: address,
-      emergency_phone: emergencyPhone || undefined,
-      items: cart.map(item => ({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity
-      }))
-    };
+    const emergency = emergencyPhone || '';
+    const total = getCartTotal();
 
-    const apiUrl = (window.location.origin.startsWith('http') ? window.location.origin : 'http://localhost:3000') + '/api/orders';
+    const itemsText = cart.map(item =>
+      `${item.name} × ${item.quantity} (${item.price * item.quantity} EGP)`
+    ).join('\n');
 
-    fetch(apiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(orderPayload)
-    }).then(function(res) {
-      return res.json().then(function(data) {
-        if (res.ok) {
-          cart = [];
-          localStorage.setItem('cart', JSON.stringify(cart));
-          updateCartCount();
-          renderCartSidebar();
-          alert('Order submitted successfully! We will contact you soon.');
-          showView('home');
-        } else {
-          throw new Error(data.error || 'Order failed');
-        }
-      });
-    }).catch(function(err) {
-      alert('Could not submit order. Make sure the server is running (npm start) and try again.');
-    });
+    const emergencyText = emergency ? `\nEmergency Phone: ${emergency}` : '';
+
+    const messageAr =
+      `مرحبا، أريد طلب:\n${itemsText}\n\nالاسم: ${name}\nالهاتف: ${phone}\nالعنوان: ${address}${emergencyText}\n\nالمجموع: ${total} جنيه`;
+
+    const messageEn =
+      `Hi, I want to order:\n${itemsText}\n\nName: ${name}\nPhone: ${phone}\nAddress: ${address}${emergencyText}\n\nTotal: ${total} EGP`;
+
+    const message = `${messageAr}\n\n---\n\n${messageEn}`;
+
+    const phoneNum = '201094113698';
+    const whatsappURL = `https://wa.me/${phoneNum}?text=${encodeURIComponent(message)}`;
+
+    window.open(whatsappURL, '_blank');
+
+    cart = [];
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    showView('home');
+    alert('✅ تم إرسال طلبك! شكراً لك 🌹');
   }
 
   function searchPerfumesByName(query) {
@@ -395,17 +388,25 @@
   }
 
   function renderPerfumeList(list) {
-    perfumeGrid.innerHTML = list.map(p => `
-      <article class="perfume-card" data-id="${p.id}">
+    perfumeGrid.innerHTML = list.map(p => {
+      const priceHtml = p.outOfStock
+        ? '<span class="out-of-stock-badge">Out of Stock</span>'
+        : (p.originalPrice ? `<span class="original-price">${p.originalPrice}</span> ${p.price} EGP - 50ml` : `${p.price} EGP - 50ml`);
+      return `
+      <article class="perfume-card${p.outOfStock ? ' out-of-stock' : ''}" data-id="${p.id}">
         <div class="perfume-card-img" style="background-image:url('${p.image}')"></div>
         <div class="perfume-card-info">
           <h3>${p.nameEn}</h3>
-          <p class="perfume-card-price">${p.originalPrice ? `<span class="original-price">${p.originalPrice}</span> ` : ''}${p.price} EGP - 50ml</p>
+          <p class="perfume-card-price">${priceHtml}</p>
         </div>
-      </article>
-    `).join('');
+      </article>`;
+    }).join('');
+
+    // ✅ كل البرفانات بتفتح صفحة التفاصيل سواء out of stock أو لأ
     perfumeGrid.querySelectorAll('.perfume-card').forEach(el => {
-      el.addEventListener('click', function() { openProduct(el.dataset.id); });
+      el.addEventListener('click', function() {
+        openProduct(el.dataset.id);
+      });
     });
   }
 
@@ -414,22 +415,28 @@
 
   function renderFeaturedPerfumes() {
     if (!featuredPerfumes) return;
-    // Edit this array to change which perfumes appear in Best Sellers - add or remove perfume IDs
-    const bestSellerIds = ['osiris', 'trojan', 'haydara','Babel'];
+    const bestSellerIds = ['osiris', 'trojan', 'haydara', 'Babel'];
     const featured = bestSellerIds.map(id => PERFUMES.find(p => p.id === id)).filter(Boolean);
-    featuredPerfumes.innerHTML = featured.map(p => `
+    featuredPerfumes.innerHTML = featured.map(p => {
+      const priceHtml = p.outOfStock
+        ? '<span class="out-of-stock-badge">Out of Stock</span>'
+        : (p.originalPrice ? `<span class="original-price">${p.originalPrice}</span> ${p.price} EGP - 50ml` : `${p.price} EGP - 50ml`);
+      // ✅ زرار Add to Cart بيظهر بس لو مش out of stock
+      const btnHtml = p.outOfStock ? '' : `<button class="btn-add-to-cart" data-id="${p.id}">Add to Cart</button>`;
+      return `
       <div class="swiper-slide">
-        <article class="featured-card" data-id="${p.id}">
+        <article class="featured-card${p.outOfStock ? ' out-of-stock' : ''}" data-id="${p.id}">
           <div class="featured-card-img" style="background-image:url('${p.image}')"></div>
           <div class="featured-card-info">
             <h3>${p.nameEn}</h3>
-            <p class="featured-card-price">${p.originalPrice ? `<span class="original-price">${p.originalPrice}</span> ` : ''}${p.price} EGP - 50ml</p>
-            <button class="btn-add-to-cart" data-id="${p.id}">Add to Cart</button>
+            <p class="featured-card-price">${priceHtml}</p>
+            ${btnHtml}
           </div>
         </article>
-      </div>
-    `).join('');
-    
+      </div>`;
+    }).join('');
+
+    // ✅ كل البرفانات بتفتح صفحة التفاصيل
     featuredPerfumes.querySelectorAll('.featured-card').forEach(card => {
       card.addEventListener('click', function(e) {
         if (!e.target.classList.contains('btn-add-to-cart')) {
@@ -437,7 +444,7 @@
         }
       });
     });
-    
+
     featuredPerfumes.querySelectorAll('.btn-add-to-cart').forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -446,7 +453,6 @@
       });
     });
 
-    // Initialize Swiper after rendering
     if (featuredSwiper) featuredSwiper.destroy(true, true);
     featuredSwiper = new Swiper('.featured-swiper', {
       slidesPerView: 1,
@@ -462,14 +468,8 @@
         prevEl: '.featured-swiper .swiper-button-prev',
       },
       breakpoints: {
-        480: {
-          slidesPerView: 2,
-          spaceBetween: 20,
-        },
-        768: {
-          slidesPerView: 3,
-          spaceBetween: 30,
-        }
+        480: { slidesPerView: 2, spaceBetween: 20 },
+        768: { slidesPerView: 3, spaceBetween: 30 }
       }
     });
   }
@@ -477,38 +477,47 @@
   function openProduct(id) {
     const p = PERFUMES.find(x => x.id === id);
     if (!p) return;
-    
+
     const notesHTML = p.notes ? `
       <div class="product-notes">
         <h3>Fragrance Notes</h3>
         <div class="notes-grid">
           <div class="note-section">
             <h4>Top Notes</h4>
-            <ul>
-              ${p.notes.top.map(note => `<li>${note}</li>`).join('')}
-            </ul>
+            <ul>${p.notes.top.map(note => `<li>${note}</li>`).join('')}</ul>
           </div>
           <div class="note-section">
             <h4>Heart Notes</h4>
-            <ul>
-              ${p.notes.heart.map(note => `<li>${note}</li>`).join('')}
-            </ul>
+            <ul>${p.notes.heart.map(note => `<li>${note}</li>`).join('')}</ul>
           </div>
           <div class="note-section">
             <h4>Base Notes</h4>
-            <ul>
-              ${p.notes.base.map(note => `<li>${note}</li>`).join('')}
-            </ul>
+            <ul>${p.notes.base.map(note => `<li>${note}</li>`).join('')}</ul>
           </div>
         </div>
       </div>
     ` : '';
-    
+
     const storyHTML = `
       <p class="product-story">${p.story}</p>
       ${p.storyAr ? `<p class="product-story-ar">${p.storyAr}</p>` : ''}
     `;
-    
+
+    // ✅ out of stock: بيوري السعر مشطوب + badge بدون زرار
+    const priceSectionHtml = p.outOfStock ? `
+      <div class="product-price-section">
+        ${p.originalPrice ? `<span class="product-original-price">${p.originalPrice} EGP</span>` : ''}
+        ${p.price ? `<span class="product-price" style="text-decoration:line-through;opacity:0.5;">${p.price} EGP - 50ml</span>` : ''}
+        <span class="out-of-stock-badge" style="display:block;margin-top:8px;">Out of Stock</span>
+      </div>
+    ` : `
+      <div class="product-price-section">
+        ${p.originalPrice ? `<span class="product-original-price">${p.originalPrice} EGP</span>` : ''}
+        <span class="product-price">${p.price} EGP - 50ml</span>
+      </div>
+      <button class="btn-add-to-cart-product" data-id="${p.id}">Add to Cart</button>
+    `;
+
     productDetail.innerHTML = `
       <div class="product-detail-grid">
         <div class="product-image" style="background-image:url('${p.image}')"></div>
@@ -517,15 +526,11 @@
           ${storyHTML}
           ${p.inspiredBy ? `<p class="product-inspired">Inspired by "${p.inspiredBy}"</p>` : ''}
           ${notesHTML}
-          <div class="product-price-section">
-            ${p.originalPrice ? `<span class="product-original-price">${p.originalPrice} EGP</span>` : ''}
-            <span class="product-price">${p.price} EGP - 50ml</span>
-          </div>
-          <button class="btn-add-to-cart-product" data-id="${p.id}">Add to Cart</button>
+          ${priceSectionHtml}
         </div>
       </div>
     `;
-    
+
     const addBtn = productDetail.querySelector('.btn-add-to-cart-product');
     if (addBtn) {
       addBtn.addEventListener('click', function() {
@@ -533,7 +538,7 @@
         alert('Added to cart!');
       });
     }
-    
+
     showView('product');
   }
 
@@ -673,25 +678,14 @@
         prevEl: '.categories-prev',
       },
       breakpoints: {
-        480: {
-          slidesPerView: 2,
-          spaceBetween: 20,
-        },
-        768: {
-          slidesPerView: 3,
-          spaceBetween: 30,
-        },
-        1024: {
-          slidesPerView: 4,
-          spaceBetween: 30,
-        }
+        480: { slidesPerView: 2, spaceBetween: 20 },
+        768: { slidesPerView: 3, spaceBetween: 30 },
+        1024: { slidesPerView: 4, spaceBetween: 30 }
       }
     });
   }
 
-  // Initialize
-  updateCartCount();
-  renderCartSidebar();
   renderFeaturedPerfumes();
-  showView('home');
+  updateCartCount();
+
 })();

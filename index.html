@@ -189,8 +189,25 @@
     </button>
   </footer>
 
+  <!-- WhatsApp Order Modal -->
+  <div id="whatsapp-modal" class="whatsapp-modal" aria-hidden="true">
+    <div class="whatsapp-modal-overlay"></div>
+    <div class="whatsapp-modal-content">
+      <button id="whatsapp-close" class="whatsapp-modal-close">×</button>
+      <h2>📱 Order Ready</h2>
+      <p>Copy & send to 01094113698</p>
+      <div id="whatsapp-details"></div>
+      <textarea id="whatsapp-message" readonly></textarea>
+      <div class="whatsapp-buttons">
+        <button id="copy-btn">Copy</button>
+        <button id="whatsapp-btn">WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
   <script src="data.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>
