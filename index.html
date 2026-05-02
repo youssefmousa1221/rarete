@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Kufi+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="stylesheet" href="style.css" />
-<link rel="stylesheet" href="new-style.css" />
+
 </head>
 <body>
   <header class="top-bar">
@@ -189,21 +189,19 @@
     </button>
   </footer>
 
-  <!-- WhatsApp Order Modal -->
-  <div id="whatsapp-modal" class="whatsapp-modal" aria-hidden="true">
-    <div class="whatsapp-modal-overlay"></div>
-    <div class="whatsapp-modal-content">
-      <button id="whatsapp-close" class="whatsapp-modal-close">×</button>
-      <h2>📱 Order Ready</h2>
-      <p>Copy & send to 01094113698</p>
-      <div id="whatsapp-details"></div>
-      <textarea id="whatsapp-message" readonly></textarea>
-      <div class="whatsapp-buttons">
-        <button id="copy-btn">Copy</button>
-        <button id="whatsapp-btn">WhatsApp</button>
-      </div>
-    </div>
-  </div>
+
+  <!-- Netlify Forms — hidden form for order submissions -->
+  <form name="rarete-order" netlify netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name"     value="rarete-order">
+    <input type="hidden" name="bot-field">
+    <input type="hidden" name="التاريخ">
+    <input type="hidden" name="الاسم">
+    <input type="hidden" name="الهاتف">
+    <input type="hidden" name="هاتف_الطوارئ">
+    <input type="hidden" name="العنوان">
+    <input type="hidden" name="المنتجات">
+    <input type="hidden" name="الإجمالي">
+  </form>
 
   <script src="data.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
